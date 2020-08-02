@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     }
  
     @IBAction func startTimer(_ sender: Any) {
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerDidEnded) , userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerDidEnded) , userInfo: nil, repeats: true)
     }
     @IBAction func pauseTimer(_ sender: Any) {
         timer.invalidate()
@@ -49,6 +49,16 @@ class ViewController: UIViewController {
         time += 1
         updateUI()
     }
+    
+    private func correctUI(value: Int, lab : UILabel) {
+        if value < 10 {
+            lab.text = "0" + String(value)
+        }
+        else {
+            lab.text = String(value)
+        }
+    }
+    
     private func updateUI() {
         var hour : Int
         var min : Int
@@ -56,11 +66,11 @@ class ViewController: UIViewController {
         
         hour = time/(60*60)
         min = (time/60)%60
-        sec = time%60
+        sec = (time%60)
         
-        hourLabel.text = String(hour)
-        minutesLabel.text = String(min)
-        secondLabel.text = String(sec)
+        correctUI(value: hour, lab: hourLabel)
+        correctUI(value: min, lab: minutesLabel)
+        correctUI(value: sec, lab: secondLabel)
     }
 }
 
